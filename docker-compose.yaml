@@ -1,0 +1,12 @@
+services:
+  postgres:
+    container_name: psql
+    image: postgres:14
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5342:5342
+
+volumes:
+  postgres-data:
+    driver: local
