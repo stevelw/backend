@@ -19,11 +19,11 @@ jobs:
 
       - name: Get Docker container ID
         id: docker-id
-        run: echo ID=(docker ps -aqf "name=psql") >> "$GITHUB_OUTPUT"
+        run: echo ID=$(docker ps -aqf "name=psql") >> "$GITHUB_OUTPUT"
 
       - name: Get Docker container IP
         id: docker-ip
-        run: echo IP=(npm run get-docker-ip '${{ steps.docker-id.outputs.ID }}') >> "$GITHUB_OUTPUT"
+        run: echo IP=$(npm run get-docker-ip '${{ steps.docker-id.outputs.ID }}') >> "$GITHUB_OUTPUT"
 
       - name: Install Packages
         run: npm ci
