@@ -5,8 +5,8 @@ import seeder from "../prisma/seed";
 
 const server = app.listen(6666);
 
-beforeEach(() => {
-  seeder()
+beforeEach(async () => {
+  await seeder()
 })
 
 afterAll(() => {
