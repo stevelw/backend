@@ -1,13 +1,22 @@
-import request from 'supertest'
-import app from '../app'
+import app from "../src/app";
+import server from "../src/server";
+import request from "supertest";
 
-describe('/api', () => {
-    test('GET: 200 - returns something', () => {
-        return request(app)
-        .get('/api')
+afterAll(() => {
+  server.close();
+});
+
+describe("🧪 Express Application", () => {
+  describe("GET /api", () => {
+    it("200: should return a successful response", () => {
+      return request(app)
+        .get("/api")
         .expect(200)
-        .then(({body}) => {
-            expect(body).toEqual({working: true})
-        })
-    })
-})
+        .then(({ body }) => {
+          expect(body).toEqual({
+            success: true,
+          });
+        });
+    });
+  });
+});
