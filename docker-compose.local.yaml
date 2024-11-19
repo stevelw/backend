@@ -4,3 +4,4 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=clowder
+      - POSTGRES_HOST_AUTH_METHOD=trust
