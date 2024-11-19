@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Docker container IP
         id: docker-ip
-        run: echo '${{ toJson(steps.docker-id.outputs) }}'
+        run: echo '${{ toJson(steps.docker-id) }}'
 
       - name: Install Packages
         run: npm ci
