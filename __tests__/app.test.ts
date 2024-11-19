@@ -1,8 +1,13 @@
 import app from "../src/app";
 import request from "supertest";
 import endpointsJson from "../src/endpoints.json";
+import seeder from "../prisma/seed";
 
 const server = app.listen(6666);
+
+beforeEach(() => {
+  seeder()
+})
 
 afterAll(() => {
   server.close();
@@ -124,6 +129,22 @@ describe("🧪 Express Application", () => {
         lon: -81.901693,
       };
       return request(app).patch("/api/devices/update").send(data).expect(401);
+    });
+  });
+
+  describe('DELETE /api/devices/delete', () => {
+    it("204: should return no content on successful deletion", () => {
+      return request(app)
+        .delete("/api/devices/delete")
+        .set("Authorization", "5804f943-4aaf-432f-83d8-62028827ac57")
+        .send()
+        .expect(410);
+    });
+    it("401: should return when device is not authorized", () => {
+      return request(app)
+        .delete("/api/devices/delete")
+        .send()
+        .expect(401);
     });
   });
 });

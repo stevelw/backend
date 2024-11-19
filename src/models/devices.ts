@@ -64,3 +64,11 @@ export async function updateDevice(
     },
   });
 }
+
+export function deleteDevice(uuid: string) {
+  return extendedClient.device.delete({
+    where: {
+      uuid: uuid
+    }
+  })
+}

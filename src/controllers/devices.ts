@@ -43,3 +43,23 @@ export function postUpdate(
     return response.status(204).send();
   });
 }
+
+export function deleteDevice(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  if (!request.headers.authorization)
+    return next({ status: 401, message: "You are not authorized" });
+
+  const deviceID = request.headers.authorization;
+
+  devices
+    .deleteDevice(deviceID)
+    .then(() => {
+      return response.status(410).send();
+    })
+    .catch(() =>
+      next({ status: 500, message: "An internal server error occurred" })
+    );
+}

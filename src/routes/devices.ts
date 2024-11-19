@@ -5,5 +5,6 @@ const devices: Router = Router();
 
 devices.post("/create", controller.createDevice);
 devices.patch("/update", controller.postUpdate);
+devices.delete("/delete", controller.deleteDevice);
 
 export default devices;
