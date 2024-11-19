@@ -96,7 +96,7 @@ describe("🧪 Express Application", () => {
     });
   });
 
-  describe("POST /api/devices/update", () => {
+  describe("PATCH /api/devices/update", () => {
     it("204: should return no content on successful update", () => {
       const data = {
         lat: 41.303921,
