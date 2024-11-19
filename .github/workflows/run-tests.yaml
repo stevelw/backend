@@ -19,7 +19,7 @@ jobs:
 
       - name: Get Docker container ID
         id: docker-id
-        run: docker ps -aqg "name=psql"
+        run: docker ps -aqf "name=psql"
 
       - name: Get Docker container IP
         id: docker-ip
