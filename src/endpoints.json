@@ -67,5 +67,12 @@
         }
       ]
     }
+  },
+  {
+    "path": "/api/devices/delete",
+    "description": "Delete a device <GPS DEVICE>",
+    "method": "DELETE",
+    "authentication": "device-uuid",
+    "result": {}
   }
 ]
