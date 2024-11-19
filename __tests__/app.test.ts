@@ -1,6 +1,7 @@
 import app from '../src/app';
-import server from '../src/server';
 import request from 'supertest';
+
+const server = app.listen(6666);
 
 afterAll(() => {
 	server.close();
@@ -43,5 +44,9 @@ describe('🧪 Express Application', () => {
 					expect(data).toEqual([]);
 				});
 		});
+	});
+
+	describe('POST /api/devices/create', () => {
+		
 	});
 });
