@@ -3,13 +3,31 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function seed() {
-  await prisma.user.upsert({
+  const user1 = await prisma.user.upsert({
     where: { username: "user1" },
     update: {},
     create: {
       username: "user1",
     },
   });
+
+  await prisma.user.upsert({
+    where: { username: "user2" },
+    update: {},
+    create: {
+      username: "user2",
+    },
+  })
+
+  await prisma.device.upsert({
+    where: { uuid: "5804f943-4aaf-432f-83d8-62028827ac57" },
+    update: {},
+    create: {
+      name: "Tiddles Collar",
+      owner_id: user1.id,
+      uuid: "5804f943-4aaf-432f-83d8-62028827ac57"
+    }
+  })
 }
 
 seed()

@@ -10,4 +10,26 @@ datasource db {
 model User {
   id       String @unique @default(cuid())
   username String @unique
+
+  devices Device[]
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Device {
+  id String @unique @default(cuid())
+
+  name String @default("GPS Device")
+  uuid String @unique @default(uuid())
+
+  owner    User?   @relation(fields: [owner_id], references: [id])
+  owner_id String?
+
+  last_pulse_at    DateTime?
+  last_location    Json      @default("{}")
+  location_history Json      @default("{}")
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
 }
