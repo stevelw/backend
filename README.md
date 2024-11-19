@@ -13,7 +13,7 @@
 
 ### Prerequisites
 
-This README assumes you have Docker installed. If you do not, please read [this](https://docs.docker.com/engine/install/) manual, based on your operating system. It will cover setting up and testing your very own Docker instance
+This README assumes you have Docker installed. If you do not, please read [this](https://docs.docker.com/engine/install/) manual, based on your operating system. It will cover setting up and testing your very own Docker instance (lucky you!)
 
 ### Steps
 
@@ -36,10 +36,11 @@ This README assumes you have Docker installed. If you do not, please read [this]
 1. Create a new `.env` file at the root of the project
 2. Refer to the `example.env` file, replacing values where required
    1. The `DATABASE_URL` will be constructed of values from `docker-compose.local.yaml` and the output of previous steps.
-      1. `POSTGRES_USER` will be our `USERNAME`
-      2. `POSTGRES_PASSWORD` will be our `PASSWORD`
-      3. `POSTGRES_DB` will be our `DATABASE`
-      4. The IP copied from [Setting up the database](###-Setting-up-the-database) will be our `HOST`
+      1. If you have not changed any values, you can copy & paste this into your `.env` - `DATABASE_URL="postgresql://root:root@HOST:5432/clowder"` and skip to step 5
+      2. `POSTGRES_USER` will be our `USERNAME`
+      3. `POSTGRES_PASSWORD` will be our `PASSWORD`
+      4. `POSTGRES_DB` will be our `DATABASE`
+      5. The IP copied from [Setting up the database](###-Setting-up-the-database) will be our `HOST`
 
 #### Migration and Seeding
 
@@ -50,6 +51,10 @@ This README assumes you have Docker installed. If you do not, please read [this]
 2. Seed the database with `npx prisma db seed`
 3. You can check the database is migrated and seeded by running `npx prisma studio`. This will open an instance of Prisma Studio in your default browser
 
+#### Running the application
+
+1. Execute `npm run dev`. This will run the `nodemon` instance, allowing for a smooth experience without having to restart the server.
+
 ---
 
-<p align="center">Made with <img height="14" src="https://emoji.lgbt/assets/svg/gay-heart.svg"/> by the Clowder team
+<p align="center">Made with <img height="14" src="https://emoji.lgbt/assets/svg/gay-heart.svg"/> by the Clowder team</p>
