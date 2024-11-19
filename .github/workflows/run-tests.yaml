@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Docker container IP
         id: docker-ip
-        run: npm run get-docker-ip ${{steps.docker-id.outputs.stdout}}
+        run: npm run get-docker-ip ${{steps.docker-id.outputs}}
 
       - name: Install Packages
         run: npm ci
@@ -31,7 +31,7 @@ jobs:
       - name: Seed database
         run: npx prisma migrate dev && npx prisma db seed
         env:
-          DATABASE_URL: "postgresql://root:root@${{steps.docker-ip.outputs.stdout}}:5432/clowder"
+          DATABASE_URL: "postgresql://root:root@${{steps.docker-ip.outputs}}:5432/clowder"
 
       - name: Run Tests
         run: npm test
