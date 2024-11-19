@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as model from '../models/users';
+import * as devices from '../models/devices';
 
 export function getDevices(
 	request: Request,
@@ -7,7 +7,7 @@ export function getDevices(
 	next: NextFunction
 ) {
   const { id } = request.params;
-  model.fetchDevices(id).then((data) => {
+  devices.fetchDevicesByUserID(id).then((data) => {
     response.json({
       success: true,
       data: data
