@@ -1,6 +1,6 @@
 type LastLocationType = {
-    lat: number,
-    lon: number
-}
+	lat: number;
+	lon: number;
+};
 
-export default LastLocationType
+export default LastLocationType;

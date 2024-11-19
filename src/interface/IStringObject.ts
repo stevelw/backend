@@ -1,3 +1,3 @@
 export default interface IStringObject {
-    [key: string]: string
+	[key: string]: string;
 }

@@ -1,16 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
-import LastLocationType from "../type/LastLocationType";
-import LocationHistoryType from "../type/LocationHistoryType";
+import LastLocationType from '../type/LastLocationType';
+import LocationHistoryType from '../type/LocationHistoryType';
 
 declare global {
-  namespace PrismaJson {
-    type LastLocation = LastLocationType;
-    type LocationHistory = LocationHistoryType;
-  }
+	// eslint-disable-next-line @typescript-eslint/no-namespace
+	namespace PrismaJson {
+		type LastLocation = LastLocationType;
+		type LocationHistory = LocationHistoryType;
+	}
 }
 
 const extendedClient = new PrismaClient().$extends({});
-type extendedClientType = typeof extendedClient;
 
 export default extendedClient;
