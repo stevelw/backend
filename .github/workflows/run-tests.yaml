@@ -4,24 +4,34 @@ on:
     branches: [main]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout latest code
-              uses: actions/checkout@v4
-            
-            - name: Setup Node ENV
-              uses: actions/setup-node@v4
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
 
-            - name: Build Docker instance
-              run: npm run setup-db
+      - name: Setup Node ENV
+        uses: actions/setup-node@v4
 
-            - name: Install Packages
-              run: npm ci
+      - name: Build Docker instance
+        run: npm run setup-db
 
-            - name: Seed database
-              run: npx prisma migrate dev && npx prisma db seed
-            
-            - name: Run Tests
-              run: npm test
+      - name: Get Docker container ID
+        id: docker-id
+        run: docker ps -aqg "name=psql"
+
+      - name: Get Docker container IP
+        id: docker-ip
+        run: npm run get-docker-ip ${{steps.docker-id.outputs.stdout}}
+
+      - name: Install Packages
+        run: npm ci
+
+      - name: Seed database
+        run: npx prisma migrate dev && npx prisma db seed
+        env:
+          DATABASE_URL: "postgresql://root:root@${{steps.docker-ip.outputs.stdout}}:5432/clowder"
+
+      - name: Run Tests
+        run: npm test
