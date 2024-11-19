@@ -14,8 +14,14 @@ jobs:
             - name: Setup Node ENV
               uses: actions/setup-node@v4
 
+            - name: Build Docker instance
+              run: npm run setup-db
+
             - name: Install Packages
               run: npm ci
+
+            - name: Seed database
+              run: npx prisma migrate dev && npx prisma db seed
             
             - name: Run Tests
               run: npm test
