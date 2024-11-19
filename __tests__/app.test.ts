@@ -1,7 +1,12 @@
 import app from "../src/app";
 import request from "supertest";
+import seeder from "../prisma/seed";
 
 const server = app.listen(6666);
+
+beforeEach(async () => {
+  await seeder()
+})
 
 afterAll(() => {
   server.close();
