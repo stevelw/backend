@@ -7,6 +7,7 @@ async function seeder() {
     where: { username: "user1" },
     update: {},
     create: {
+      id: "cm3op7iwu0000jrcqa60tc9kv",
       username: "user1",
     },
   });
@@ -15,6 +16,7 @@ async function seeder() {
     where: { username: "user2" },
     update: {},
     create: {
+      id: "cm3op7iww0001jrcqpq3qxx6i",
       username: "user2",
     },
   });
