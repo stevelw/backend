@@ -47,7 +47,8 @@ This README assumes you have Docker installed. If you do not, please read [this]
 > If at this point you get an error with connecting to the database, try changing the port in the `DATABASE_URL` environment variable to `54320`
 
 1. Run all of the migrations by executing `npx prisma migrate dev`
-2.
+2. Seed the database with `npx prisma db seed`
+3. You can check the database is migrated and seeded by running `npx prisma studio`. This will open an instance of Prisma Studio in your default browser
 
 ---
 
