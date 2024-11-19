@@ -1,4 +1,6 @@
-import app from "./app"
-const { PORT = 9090 } = process.env
+import { Server } from "http";
+import app from "./app";
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}...`))
+const server: Server = app.listen(8080)
+
+export default server;
