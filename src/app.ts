@@ -4,6 +4,8 @@ import statusError from "./errorHandlers/statusError";
 
 const app: Express = express();
 
+app.use(express.json())
+
 Object.entries(routes).forEach(([route, handlers]) => {
   if (route === "root") route = "";
   app.use(`/api/${route}`, handlers);

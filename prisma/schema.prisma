@@ -33,7 +33,8 @@ model Device {
   last_pulse_at    DateTime?
   /// [LastLocation]
   last_location    Json      @default("{}")
-  location_history Json      @default("{}")
+  /// [LocationHistory]
+  location_history Json      @default("[]")
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
