@@ -23,16 +23,16 @@ describe("🧪 Express Application", () => {
   });
 
   describe("GET /api/endpoints", () => {
-    const expectedData = {}
-    endpointsJson.forEach(endpoint => {
-      const copy = JSON.parse(JSON.stringify(endpoint))
+    const expectedData = {};
+    endpointsJson.forEach((endpoint) => {
+      const copy = JSON.parse(JSON.stringify(endpoint));
       delete copy.path;
       Object.assign(expectedData, {
         [endpoint.path]: {
-          ...copy
-        }
-      })
-    })
+          ...copy,
+        },
+      });
+    });
     it("200: should return a successful response", () => {
       return request(app)
         .get("/api/endpoints")
@@ -103,7 +103,7 @@ describe("🧪 Express Application", () => {
         lon: -81.901693,
       };
       return request(app)
-        .post("/api/devices/update")
+        .patch("/api/devices/update")
         .set("Authorization", "5804f943-4aaf-432f-83d8-62028827ac57")
         .send(data)
         .expect(204);
@@ -113,7 +113,7 @@ describe("🧪 Express Application", () => {
         lat: 41.303921,
       };
       return request(app)
-        .post("/api/devices/update")
+        .patch("/api/devices/update")
         .set("Authorization", "5804f943-4aaf-432f-83d8-62028827ac57")
         .send(data)
         .expect(400);
@@ -123,7 +123,7 @@ describe("🧪 Express Application", () => {
         lat: 41.303921,
         lon: -81.901693,
       };
-      return request(app).post("/api/devices/update").send(data).expect(401);
+      return request(app).patch("/api/devices/update").send(data).expect(401);
     });
   });
 });
