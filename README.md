@@ -9,8 +9,7 @@ This README assumes you have Docker installed. If you do not, please read [this]
 1. Ensure that Docker is started. This is down to how you have installed Docker. You can test Docker is online by running `docker info`
 2. Run `npm run setup-db`.
 3. Run `docker ps` to see the containers, and copy the container ID
-4. Run `docker inspect
-  -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [CONTAINER_ID]`, replacing `[CONTAINER_ID]` with the one copied from the previous step
+4. Run `docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' [CONTAINER_ID]`, replacing `[CONTAINER_ID]` with the one copied from the previous step
 5. Save the IP output from the above command - It will be used later
 
 ### Setting up the environment for local development
