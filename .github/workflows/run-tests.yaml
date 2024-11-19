@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Docker container IP
         id: docker-ip
-        run: echo IP=$(npm run get-docker-ip '${{ steps.docker-id.outputs.ID }}') >> "$GITHUB_OUTPUT"
+        run: echo IP=$(npm run get-docker-ip ${{ steps.docker-id.outputs.ID }}) >> "$GITHUB_OUTPUT"
 
       - name: Install Packages
         run: npm ci
