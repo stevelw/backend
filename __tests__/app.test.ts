@@ -1,6 +1,6 @@
 import app from "../src/app";
 import request from "supertest";
-import seeder from "../prisma/seed";
+import endpointsJson from "../src/endpoints.json";
 
 const server = app.listen(6666);
 
@@ -18,6 +18,28 @@ describe("🧪 Express Application", () => {
           expect(body).toEqual({
             success: true,
           });
+        });
+    });
+  });
+
+  describe("GET /api/endpoints", () => {
+    const expectedData = {}
+    endpointsJson.forEach(endpoint => {
+      const copy = JSON.parse(JSON.stringify(endpoint))
+      delete copy.path;
+      Object.assign(expectedData, {
+        [endpoint.path]: {
+          ...copy
+        }
+      })
+    })
+    it("200: should return a successful response", () => {
+      return request(app)
+        .get("/api/endpoints")
+        .expect(200)
+        .then(({ body: { success, data } }) => {
+          expect(success).toBe(true);
+          expect(data).toEqual(expectedData);
         });
     });
   });
@@ -101,10 +123,7 @@ describe("🧪 Express Application", () => {
         lat: 41.303921,
         lon: -81.901693,
       };
-      return request(app)
-        .post("/api/devices/update")
-        .send(data)
-        .expect(401)
+      return request(app).post("/api/devices/update").send(data).expect(401);
     });
   });
 });
