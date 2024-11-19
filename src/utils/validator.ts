@@ -9,6 +9,12 @@ export default function validator(
     errors: [],
   };
 
+  if(!payload || Object.keys(payload).length === 0) {
+    result.errors = ["body was empty"];
+    result.success = false;
+    return result
+  }
+
   Object.keys(schema).forEach((key) => {
     let expectedValue: string | string[] = schema[key].split(",");
     let isOptional = false;
