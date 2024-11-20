@@ -11,6 +11,39 @@ declare global {
 	}
 }
 
-const extendedClient = new PrismaClient().$extends({});
+const extendedClient = new PrismaClient().$extends({
+	model: {
+		user: {
+			async delete({ where }: { where: { id: string } }) {
+				return extendedClient.user.update({
+					where: { ...where },
+					data: {
+						deleted_at: new Date(),
+					},
+				});
+			},
+		},
+		device: {
+			async delete({ where }: { where: { id: string } }) {
+				return extendedClient.device.update({
+					where: { ...where },
+					data: {
+						deleted_at: new Date(),
+					},
+				});
+			},
+		},
+		cat: {
+			async delete({ where }: { where: { id: string } }) {
+				return extendedClient.cat.update({
+					where: { ...where },
+					data: {
+						deleted_at: new Date(),
+					},
+				});
+			},
+		},
+	},
+});
 
 export default extendedClient;

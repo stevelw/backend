@@ -65,9 +65,13 @@ export function deleteDevice(
 
 	users
 		.getUserByUsername(username)
-		.then((data) => {
-			if (!data) throw new Error('User does not exist');
-			devices.deleteDevice(payload.device_uuid, data.id).then(() => {
+		.then(async (user) => {
+			if (!user) throw new Error('User does not exist');
+			const usersDevices = await devices.fetchDevicesByUserID(user.id);
+			const device = usersDevices.filter(
+				(device) => device.uuid === payload.device_uuid
+			)[0];
+			devices.deleteDevice(device.id).then(() => {
 				return response.status(204).send();
 			});
 		})

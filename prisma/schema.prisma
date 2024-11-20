@@ -16,9 +16,11 @@ model User {
   username String @unique
 
   devices Device[]
+  cats    Cat[]
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
+  deleted_at DateTime?
 }
 
 model Device {
@@ -30,6 +32,8 @@ model Device {
   owner    User?   @relation(fields: [owner_id], references: [id])
   owner_id String?
 
+  cat Cat?
+
   last_pulse_at    DateTime?
   /// [LastLocation]
   last_location    Json      @default("{}")
@@ -38,4 +42,22 @@ model Device {
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
+  deleted_at DateTime?
+}
+
+model Cat {
+  id String @unique @default(cuid())
+
+  name        String @default("Cat")
+  description String @default("Meow meow. Meow meow? Meow!")
+  picture_url String @default("https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg")
+
+  device    Device @relation(fields: [device_id], references: [id])
+  device_id String @unique
+  owner     User?  @relation(fields: [owner_id], references: [id])
+  owner_id  String
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  deleted_at DateTime?
 }
