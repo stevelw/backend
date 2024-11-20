@@ -31,6 +31,18 @@ async function seeder() {
 		},
 	});
 
+	const device2 = await prisma.device.upsert({
+		where: { uuid: '36932d18-78a2-4ceb-b979-64a5ed441551' },
+		update: {},
+		create: {
+			name: 'A Collar',
+			owner_id: user1.id,
+			uuid: '36932d18-78a2-4ceb-b979-64a5ed441551',
+		},
+	});
+
+	// cm3pyzthe000108jka5f7hw99
+
 	await prisma.cat.upsert({
 		where: { id: 'cm3pr1rkb000008l8fs7icr9g' },
 		update: {},
@@ -39,6 +51,17 @@ async function seeder() {
 			name: 'Mr Tiddles',
 			owner_id: user1.id,
 			device_id: device1.id,
+		},
+	});
+
+	await prisma.cat.upsert({
+		where: { id: 'cm3pz1t0v000308jka8bl7x25' },
+		update: {},
+		create: {
+			id: 'cm3pz1t0v000308jka8bl7x25',
+			name: 'Daisy, Destroy of Life',
+			owner_id: user1.id,
+			device_id: device2.id,
 		},
 	});
 }

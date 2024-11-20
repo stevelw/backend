@@ -34,3 +34,14 @@ export async function fetchCatsByUserID(id: string) {
 		})
 		.then((data) => data);
 }
+
+export async function updateCat(id: string, payload: object) {
+	return extendedClient.cat.update({
+		where: {
+			id: id,
+		},
+		data: {
+			...payload,
+		},
+	});
+}

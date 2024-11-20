@@ -206,5 +206,41 @@ describe('🧪 Express Application', () => {
 					});
 			});
 		});
+
+		describe('POST /api/cats/update', () => {
+			it('204: should return no content on successful update', () => {
+				const data = {
+					cat_id: 'cm3pz1t0v000308jka8bl7x25',
+					name: 'Daisy, Eater of Worlds',
+				};
+				return request(app)
+					.post('/api/cats/update')
+					.set('Authorization', 'user1')
+					.send(data)
+					.expect(200)
+					.then(({ body: { success, data } }) => {
+						console.log(data);
+						expect(success).toBe(true);
+						expect(data).toMatchObject({
+							name: 'Daisy, Eater of Worlds',
+						});
+					});
+			});
+			it('400: should return when body has an error', () => {
+				const data = {};
+				return request(app)
+					.post('/api/cats/update')
+					.set('Authorization', 'user1')
+					.send(data)
+					.expect(400);
+			});
+			it('401: should return when device is not authorized', () => {
+				const data = {
+					cat_id: 'cm3pz1t0v000308jka8bl7x25',
+					name: 'Daisy, Eater of Worlds',
+				};
+				return request(app).post('/api/cats/update').send(data).expect(401);
+			});
+		});
 	});
 });
