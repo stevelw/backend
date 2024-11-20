@@ -24,3 +24,13 @@ export async function createCat(
 			});
 		});
 }
+
+export async function fetchCatsByUserID(id: string) {
+	return extendedClient.cat
+		.findMany({
+			where: {
+				owner_id: id,
+			},
+		})
+		.then((data) => data);
+}

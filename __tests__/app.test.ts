@@ -76,6 +76,31 @@ describe('🧪 Express Application', () => {
 					});
 			});
 		});
+
+		describe('GET /api/users/:id/cats', () => {
+			const userWithCats = 'cm3op7iwu0000jrcqa60tc9kv';
+			const userWithoutCats = 'cm3op7iww0001jrcqpq3qxx6i';
+
+			it('200: should return the devices for a valid user with more than one device', () => {
+				return request(app)
+					.get(`/api/users/${userWithCats}/cats`)
+					.expect(200)
+					.then(({ body: { success, data } }) => {
+						expect(success).toBe(true);
+						expect(data).not.toEqual([]);
+					});
+			});
+
+			it('200: should return an empty array when given a valid user with no devices', () => {
+				return request(app)
+					.get(`/api/users/${userWithoutCats}/cats`)
+					.expect(200)
+					.then(({ body: { success, data } }) => {
+						expect(success).toBe(true);
+						expect(data).toEqual([]);
+					});
+			});
+		});
 	});
 
 	describe('Devices', () => {
