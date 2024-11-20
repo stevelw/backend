@@ -87,9 +87,29 @@
 		},
 		"result": {
 			"success": true,
-			"data": {
-
-			}
+			"data": {}
+		}
+	},
+	{
+		"path": "/api/users/:id/cats",
+		"description": "List all of a users cats",
+		"method": "GET",
+		"authentication": "none",
+		"result": {
+			"success": true,
+			"data": [
+				{
+					"id": "cm3ptn1mf0005flja3l1pl70b",
+					"name": "Cat",
+					"description": "Meow meow. Meow meow? Meow!",
+					"picture_url": "https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg",
+					"device_id": null,
+					"owner_id": "cm3op7iwu0000jrcqa60tc9kv",
+					"updated_at": "2024-11-20T11:49:55.576Z",
+					"created_at": "2024-11-20T11:49:55.576Z",
+					"deleted_at": null
+				}
+			]
 		}
 	}
 ]
