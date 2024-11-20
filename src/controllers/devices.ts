@@ -24,24 +24,23 @@ export function postUpdate(
 	response: Response,
 	next: NextFunction
 ) {
-	if (!request.headers.authorization)
-		return next({ status: 401, message: 'You are not authorized' });
-
-	const deviceID = request.headers.authorization;
-
 	const schema = {
+		id: 'string',
 		lat: 'number',
 		lon: 'number',
 		accuracy: 'number,optional',
 		sat: 'string,optional',
 		batt: 'number,optional',
 	};
-	const payload = request.body;
+	const payload = request.body.body;
 	const result = validator(payload, schema);
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	devices.updateDevice(deviceID, payload).then(() => {
+	const copy = JSON.parse(JSON.stringify(result.body));
+	delete copy.id;
+
+	devices.updateDevice(result.body.id, copy).then(() => {
 		response.status(204).send();
 	});
 }
