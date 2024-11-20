@@ -1,11 +1,11 @@
-import root from "./root";
-import users from "./users";
-import devices from "./devices"
+import root from './root';
+import users from './users';
+import devices from './devices';
 
 const routes = {
-  root,
-  users,
-  devices
+	root,
+	users,
+	devices,
 };
 
 export default routes;

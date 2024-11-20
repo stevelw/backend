@@ -31,10 +31,9 @@ jobs:
       - name: Seed database
         run: npx prisma migrate dev && npx prisma db seed
         env:
-          DATABASE_URL: "postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder"
+          DATABASE_URL: 'postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder'
 
       - name: Run Tests
         run: npm test
         env:
-          DATABASE_URL: "postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder"
-
+          DATABASE_URL: 'postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder'

@@ -1,3 +1,3 @@
-type LocationHistoryType = { lat: number, lon: number }[]
+type LocationHistoryType = { lat: number; lon: number }[];
 
-export default LocationHistoryType
+export default LocationHistoryType;
