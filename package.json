@@ -7,7 +7,8 @@
     "test": "jest",
     "prepare": "husky",
     "setup-db": "./setup-db.sh local up -d",
-    "get-docker-ip": "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "
+    "get-docker-ip": "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ",
+    "dev": "npx tsx ./src/server.ts"
   },
   "repository": {
     "type": "git",
