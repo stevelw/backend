@@ -4,10 +4,6 @@ import seeder from "../prisma/seed";
 
 const server = app.listen(6666);
 
-beforeEach(async () => {
-  await seeder()
-})
-
 afterAll(() => {
   server.close();
 });
@@ -75,6 +71,40 @@ describe("🧪 Express Application", () => {
           expect(success).toBe(false);
           expect(message).toBe("You are not authorized");
         });
+    });
+  });
+
+  describe("POST /api/devices/update", () => {
+    it("204: should return no content on successful update", () => {
+      const data = {
+        lat: 41.303921,
+        lon: -81.901693,
+      };
+      return request(app)
+        .post("/api/devices/update")
+        .set("Authorization", "5804f943-4aaf-432f-83d8-62028827ac57")
+        .send(data)
+        .expect(204);
+    });
+    it("400: should return when body has an error", () => {
+      const data = {
+        lat: 41.303921,
+      };
+      return request(app)
+        .post("/api/devices/update")
+        .set("Authorization", "5804f943-4aaf-432f-83d8-62028827ac57")
+        .send(data)
+        .expect(400);
+    });
+    it("401: should return when device is not authorized", () => {
+      const data = {
+        lat: 41.303921,
+        lon: -81.901693,
+      };
+      return request(app)
+        .post("/api/devices/update")
+        .send(data)
+        .expect(401)
     });
   });
 });
