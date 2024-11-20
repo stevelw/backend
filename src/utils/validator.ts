@@ -3,7 +3,8 @@ import IStringObject from '../interface/IStringObject';
 export default function validator(
 	payload: IStringObject,
 	schema: IStringObject
-): { success: boolean; errors: string[]; body: object } {
+): { success: boolean; errors: string[]; body: Record<string, any> } {
+	// eslint-disable-line @typescript-eslint/no-explicit-any
 	const result: { success: boolean; errors: string[]; body: object } = {
 		success: true,
 		errors: [],
