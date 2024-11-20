@@ -41,11 +41,9 @@
 		"method": "PATCH",
 		"authentication": "device-uuid",
 		"body": {
-			"body": {
-				"id": "string",
-				"lat": "number",
-				"lon": "number"
-			}
+			"id": "string",
+			"lat": "number",
+			"lon": "number"
 		},
 		"result": {}
 	},

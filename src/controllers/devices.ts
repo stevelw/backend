@@ -32,7 +32,7 @@ export function postUpdate(
 		sat: 'string,optional',
 		batt: 'number,optional',
 	};
-	const payload = request.body.body;
+	const payload = request.body;
 	const result = validator(payload, schema);
 
 	if (!result.success) return next({ status: 400, message: result.errors });

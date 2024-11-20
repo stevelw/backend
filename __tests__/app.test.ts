@@ -134,11 +134,9 @@ describe('🧪 Express Application', () => {
 		describe('PATCH /api/devices/update', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
-					body: {
-						id: '5804f943-4aaf-432f-83d8-62028827ac57',
-						lat: 41.303921,
-						lon: -81.901693,
-					},
+					id: '5804f943-4aaf-432f-83d8-62028827ac57',
+					lat: 41.303921,
+					lon: -81.901693,
 				};
 				return request(app).post('/api/devices/update').send(data).expect(204);
 			});
