@@ -133,12 +133,15 @@ describe('🧪 Express Application', () => {
 	});
 
 	describe('DELETE /api/devices/delete', () => {
+		const body = {
+			device_uuid: '5804f943-4aaf-432f-83d8-62028827ac57',
+		};
 		it('204: should return no content on successful deletion', () => {
 			return request(app)
 				.delete('/api/devices/delete')
-				.set('Authorization', '5804f943-4aaf-432f-83d8-62028827ac57')
-				.send()
-				.expect(410);
+				.set('Authorization', 'user1')
+				.send(body)
+				.expect(204);
 		});
 		it('401: should return when device is not authorized', () => {
 			return request(app).delete('/api/devices/delete').send().expect(401);

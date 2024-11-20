@@ -70,9 +70,9 @@
 	},
 	{
 		"path": "/api/devices/delete",
-		"description": "Delete a device <GPS DEVICE>",
+		"description": "Delete a device",
 		"method": "DELETE",
-		"authentication": "device-uuid",
+		"authentication": "username",
 		"result": {}
 	}
 ]

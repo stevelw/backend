@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as devices from '../models/devices';
+import * as users from '../models/users';
 import validator from '../utils/validator';
 
 export function createDevice(
@@ -52,14 +53,23 @@ export function deleteDevice(
 	if (!request.headers.authorization)
 		return next({ status: 401, message: 'You are not authorized' });
 
-	const deviceID = request.headers.authorization;
+	const username = request.headers.authorization;
 
-	devices
-		.deleteDevice(deviceID)
-		.then(() => {
-			return response.status(410).send();
+	const schema = {
+		device_uuid: 'string',
+	};
+	const payload = request.body;
+	const result = validator(payload, schema);
+
+	if (!result.success) return next({ status: 400, message: result.errors });
+
+	users
+		.getUserByUsername(username)
+		.then((data) => {
+			if (!data) throw new Error('User does not exist');
+			devices.deleteDevice(payload.device_uuid, data.id).then(() => {
+				return response.status(204).send();
+			});
 		})
-		.catch(() =>
-			next({ status: 500, message: 'An internal server error occurred' })
-		);
+		.catch((e) => next({ status: 401, message: e }));
 }
