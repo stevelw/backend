@@ -74,5 +74,22 @@
 		"method": "DELETE",
 		"authentication": "username",
 		"result": {}
+	},
+	{
+		"path": "/api/cats/create",
+		"description": "Register a new cat",
+		"method": "POST",
+		"authentication": "username",
+		"body": {
+			"name": "string, optional",
+			"description": "string, optional",
+			"picture_url": "string, optional"
+		},
+		"result": {
+			"success": true,
+			"data": {
+
+			}
+		}
 	}
 ]
