@@ -1,17 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import validator from '../utils/validator';
 import * as cats from '../models/cats';
+import { type User } from '@prisma/client';
 
 export function createCat(
+	user: User,
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) {
-	if (!request.headers.authorization)
-		return next({ status: 401, message: 'You are not authorized' });
-
-	const username = request.headers.authorization;
-
 	const schema = {
 		name: 'string,optional',
 		description: 'string,optional',
@@ -22,7 +19,16 @@ export function createCat(
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	cats.createCat(username, result.body).then((cat) => {
+	cats.createCat(user.username, result.body).then((cat) => {
 		return response.status(201).json({ success: true, data: cat });
 	});
 }
+
+// export function updateCat(
+// 	user: User,
+// 	request: Request,
+// 	response: Response,
+// 	next: NextFunction
+// ) {
+// 	// TODO
+// }
