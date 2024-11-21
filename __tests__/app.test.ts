@@ -182,10 +182,9 @@ describe('🧪 Express Application', () => {
 					.then(({ body: { success, data } }) => {
 						expect(success).toBe(true);
 						expect(data).toMatchObject({
-							name: 'Cat',
-							description: 'Meow meow. Meow meow? Meow!',
-							picture_url:
-								'https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg',
+							name: null,
+							description: null,
+							picture_url: null,
 						});
 					});
 			});

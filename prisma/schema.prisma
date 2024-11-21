@@ -46,9 +46,9 @@ model Device {
 model Cat {
   id String @unique @default(cuid())
 
-  name        String @default("Cat")
-  description String @default("Meow meow. Meow meow? Meow!")
-  picture_url String @default("https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg")
+  name        String?
+  description String?
+  picture_url String?
 
   device    Device? @relation(fields: [device_id], references: [id])
   device_id String? @unique
