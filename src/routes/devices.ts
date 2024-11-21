@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import * as controller from '../controllers/devices';
+import usernameAuth from '../middleware/usernameAuth';
 
 const devices: Router = Router();
 
-devices.post('/create', controller.createDevice);
-devices.patch('/update', controller.postUpdate);
-devices.delete('/delete', controller.deleteDevice);
+devices.post('/create', usernameAuth, controller.createDevice);
+devices.post('/update', controller.postUpdate);
+devices.delete('/delete', usernameAuth, controller.deleteDevice);
 
 export default devices;

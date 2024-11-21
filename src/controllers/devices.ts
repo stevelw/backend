@@ -1,20 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
-import * as devices from '../models/devices';
 import validator from '../utils/validator';
+import * as devices from '../models/devices';
+import { type User } from '@prisma/client';
 
 export function createDevice(
+	user: User,
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) {
-	if (!request.headers.authorization)
-		return next({ status: 401, message: 'You are not authorized' });
-
-	const username = request.headers.authorization;
-
-	devices.createDevice(username).then((device) => {
-		response.status(201).json({ success: true, data: device });
-	});
+	devices
+		.createDevice(user.username)
+		.then((device) => {
+			return response.status(201).json({ success: true, data: device });
+		})
+		.catch(() =>
+			next({ status: 500, message: 'An internal server error occurred' })
+		);
 }
 
 export function postUpdate(
@@ -22,12 +24,8 @@ export function postUpdate(
 	response: Response,
 	next: NextFunction
 ) {
-	if (!request.headers.authorization)
-		return next({ status: 401, message: 'You are not authorized' });
-
-	const deviceID = request.headers.authorization;
-
 	const schema = {
+		id: 'string',
 		lat: 'number',
 		lon: 'number',
 		accuracy: 'number,optional',
@@ -39,27 +37,34 @@ export function postUpdate(
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	devices.updateDevice(deviceID, payload).then(() => {
-		return response.status(204).send();
+	const copy = JSON.parse(JSON.stringify(result.body));
+	delete copy.id;
+
+	devices.updateDevice(result.body.id, copy).then(() => {
+		response.status(204).send();
 	});
 }
 
 export function deleteDevice(
+	user: User,
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) {
-	if (!request.headers.authorization)
-		return next({ status: 401, message: 'You are not authorized' });
+	const schema = {
+		device_uuid: 'string',
+	};
+	const payload = request.body;
+	const result = validator(payload, schema);
 
-	const deviceID = request.headers.authorization;
+	if (!result.success) return next({ status: 400, message: result.errors });
 
-	devices
-		.deleteDevice(deviceID)
-		.then(() => {
-			return response.status(410).send();
-		})
-		.catch(() =>
-			next({ status: 500, message: 'An internal server error occurred' })
-		);
+	devices.fetchDevicesByUserID(user.id).then((usersDevices) => {
+		const device = usersDevices.filter(
+			(device) => device.uuid === payload.device_uuid
+		)[0];
+		devices.deleteDevice(device.id).then(() => {
+			return response.status(204).send();
+		});
+	});
 }
