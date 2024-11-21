@@ -41,6 +41,7 @@
 		"method": "PATCH",
 		"authentication": "device-uuid",
 		"body": {
+			"id": "string",
 			"lat": "number",
 			"lon": "number"
 		},
@@ -70,9 +71,72 @@
 	},
 	{
 		"path": "/api/devices/delete",
-		"description": "Delete a device <GPS DEVICE>",
+		"description": "Delete a device",
 		"method": "DELETE",
-		"authentication": "device-uuid",
+		"authentication": "username",
 		"result": {}
+	},
+	{
+		"path": "/api/cats/create",
+		"description": "Register a new cat",
+		"method": "POST",
+		"authentication": "username",
+		"body": {
+			"name": "string, optional",
+			"description": "string, optional",
+			"picture_url": "string, optional"
+		},
+		"result": {
+			"success": true,
+			"data": {}
+		}
+	},
+	{
+		"path": "/api/users/:id/cats",
+		"description": "List all of a users cats",
+		"method": "GET",
+		"authentication": "none",
+		"result": {
+			"success": true,
+			"data": [
+				{
+					"id": "cm3ptn1mf0005flja3l1pl70b",
+					"name": "Cat",
+					"description": "Meow meow. Meow meow? Meow!",
+					"picture_url": "https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg",
+					"device_id": null,
+					"owner_id": "cm3op7iwu0000jrcqa60tc9kv",
+					"updated_at": "2024-11-20T11:49:55.576Z",
+					"created_at": "2024-11-20T11:49:55.576Z",
+					"deleted_at": null
+				}
+			]
+		}
+	},
+	{
+		"path": "/api/cats/update",
+		"description": "Update a cats social information",
+		"method": "POST",
+		"authentication": "username",
+		"body": {
+			"cat_id": "string",
+			"name": "string, optional",
+			"description": "string, optional",
+			"picture_url": "string, optional"
+		},
+		"result": {
+			"success": true,
+			"data": {
+				"id": "cm3pz1t0v000308jka8bl7x25",
+				"name": "Daisy, Eater of Worlds",
+				"description": "Meow meow. Meow meow? Meow!",
+				"picture_url": "https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg",
+				"device_id": "cm3pz39ec0003110jpvg6mya6",
+				"owner_id": "cm3op7iwu0000jrcqa60tc9kv",
+				"updated_at": "2024-11-20T14:31:14.136Z",
+				"created_at": "2024-11-20T14:22:30.232Z",
+				"deleted_at": null
+			}
+		}
 	}
 ]

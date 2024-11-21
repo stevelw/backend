@@ -16,6 +16,7 @@ model User {
   username String @unique
 
   devices Device[]
+  cats    Cat[]
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
@@ -30,11 +31,29 @@ model Device {
   owner    User?   @relation(fields: [owner_id], references: [id])
   owner_id String?
 
+  cat Cat?
+
   last_pulse_at    DateTime?
   /// [LastLocation]
   last_location    Json      @default("{}")
   /// [LocationHistory]
   location_history Json      @default("[]")
+
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Cat {
+  id String @unique @default(cuid())
+
+  name        String?
+  description String?
+  picture_url String?
+
+  device    Device? @relation(fields: [device_id], references: [id])
+  device_id String? @unique
+  owner     User?  @relation(fields: [owner_id], references: [id])
+  owner_id  String
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())

@@ -3,17 +3,13 @@ import IStringObject from '../interface/IStringObject';
 export default function validator(
 	payload: IStringObject,
 	schema: IStringObject
-): { success: boolean; errors: string[] } {
-	const result: { success: boolean; errors: string[] } = {
+): { success: boolean; errors: string[]; body: Record<string, any> } {
+	// eslint-disable-line @typescript-eslint/no-explicit-any
+	const result: { success: boolean; errors: string[]; body: object } = {
 		success: true,
 		errors: [],
+		body: {},
 	};
-
-	if (!payload || Object.keys(payload).length === 0) {
-		result.errors = ['body was empty'];
-		result.success = false;
-		return result;
-	}
 
 	Object.keys(schema).forEach((key) => {
 		let expectedValue: string | string[] = schema[key].split(',');
@@ -35,6 +31,8 @@ export default function validator(
 					key
 				]}`
 			);
+
+		Object.assign(result.body, { [key]: payload[key] });
 	});
 
 	if (result.errors.length !== 0) result.success = false;
