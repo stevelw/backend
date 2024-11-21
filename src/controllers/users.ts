@@ -26,7 +26,7 @@ export function getCats(request: Request, response: Response) {
 
 export function updateUser(req: Request, res: Response, next: NextFunction) {
 	const schema = {
-		requestPrivacy: 'boolean',
+		requested_privacy: 'boolean',
 	};
 	const payload = req.body;
 	const result = validator(payload, schema);

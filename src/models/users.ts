@@ -8,16 +8,11 @@ export function getUserByUsername(username: string) {
 	});
 }
 
-export function updateUser(
-	userId: string,
-	data: { requestedPrivacy: boolean }
-) {
+export function updateUser(userId: string, data: object) {
 	return extendedClient.user.update({
 		where: {
 			id: userId,
 		},
-		data: {
-			requested_privacy: data.requestedPrivacy,
-		},
+		data,
 	});
 }

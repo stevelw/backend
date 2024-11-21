@@ -105,7 +105,7 @@ describe('🧪 Express Application', () => {
 		describe('PATCH /api/users/:id', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
-					requestPrivacy: true,
+					requested_privacy: true,
 				};
 				return request(app)
 					.patch('/api/users/settings')
