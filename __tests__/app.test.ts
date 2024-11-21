@@ -108,7 +108,8 @@ describe('🧪 Express Application', () => {
 					requestPrivacy: true,
 				};
 				return request(app)
-					.patch('/api/users/cm3op7iwu0000jrcqa60tc9kv')
+					.patch('/api/users/settings')
+					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
 					.send(data)
 					.expect(204);
 			});
@@ -119,7 +120,7 @@ describe('🧪 Express Application', () => {
 					},
 				};
 				return request(app)
-					.patch('/api/users/cm3op7iwu0000jrcqa60tc9kv')
+					.patch('/api/users/settings')
 					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
 					.send(data)
 					.expect(400);

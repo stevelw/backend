@@ -33,7 +33,8 @@ export function updateUser(req: Request, res: Response, next: NextFunction) {
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	const { id } = req.params;
+	const id: string = req.headers.authorization ?? '';
+
 	users
 		.updateUser(id, req.body)
 		.then((updatedUser) => {
