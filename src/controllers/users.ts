@@ -41,6 +41,6 @@ export function updateUser(req: Request, res: Response, next: NextFunction) {
 			res.status(204).json({ sucess: true, data: updatedUser });
 		})
 		.catch(() => {
-			res.status(500).send({ msg: 'Server error' });
+			res.status(500).send({ msg: 'An internal server error occurred' });
 		});
 }
