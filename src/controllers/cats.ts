@@ -19,7 +19,7 @@ export function createCat(
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	cats.createCat(user.username, result.body).then((cat) => {
+	cats.createCat(user.id, result.body).then((cat) => {
 		return response.status(201).json({ success: true, data: cat });
 	});
 }
@@ -44,13 +44,11 @@ export function updateCat(
 
 	cats.fetchCatsByUserID(user.id).then((usersCats) => {
 		// ensure that the authenticated user owns the cat
-		const catsThatMatch = usersCats.filter(
-			(cat) => cat.id === result.body.cat_id
-		);
-		if (catsThatMatch.length === 0)
-			return next({ status: 404, message: 'Cat not found' });
+		const catMatch = usersCats.find((cat) => cat.id === result.body.cat_id);
+		if (!catMatch) throw new Error('no cat found');
+
 		delete result.body.cat_id;
-		cats.updateCat(catsThatMatch[0].id, result.body).then((updated_cat) => {
+		cats.updateCat(catMatch.id, result.body).then((updated_cat) => {
 			response.status(200).json({ success: true, data: updated_cat });
 		});
 	});

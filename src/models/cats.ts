@@ -1,7 +1,7 @@
 import extendedClient from '../db/client';
 
 export async function createCat(
-	username: string,
+	id: string,
 	parameters?: {
 		name?: string;
 		description?: string;
@@ -11,7 +11,7 @@ export async function createCat(
 	return extendedClient.user
 		.findFirst({
 			where: {
-				username: username,
+				id: id,
 			},
 		})
 		.then((user) => {
