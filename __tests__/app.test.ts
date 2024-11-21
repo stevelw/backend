@@ -211,7 +211,6 @@ describe('🧪 Express Application', () => {
 					.send(data)
 					.expect(200)
 					.then(({ body: { success, data } }) => {
-						console.log(data);
 						expect(success).toBe(true);
 						expect(data).toMatchObject({
 							name: 'Daisy, Eater of Worlds',
