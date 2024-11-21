@@ -20,7 +20,6 @@ model User {
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  deleted_at DateTime?
 }
 
 model Device {
@@ -42,7 +41,6 @@ model Device {
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  deleted_at DateTime?
 }
 
 model Cat {
@@ -59,5 +57,4 @@ model Cat {
 
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  deleted_at DateTime?
 }
