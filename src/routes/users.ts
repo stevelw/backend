@@ -5,5 +5,6 @@ const users: Router = Router();
 
 users.get('/:id/devices', controller.getDevices);
 users.get('/:id/cats', controller.getCats);
+users.patch('/:id', controller.updateUser);
 
 export default users;

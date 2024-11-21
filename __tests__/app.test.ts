@@ -101,6 +101,30 @@ describe('🧪 Express Application', () => {
 					});
 			});
 		});
+
+		describe('PATCH /api/users/:id', () => {
+			it('204: should return no content on successful update', () => {
+				const data = {
+					requestPrivacy: true,
+				};
+				return request(app)
+					.patch('/api/users/cm3op7iwu0000jrcqa60tc9kv')
+					.send(data)
+					.expect(204);
+			});
+			it('400: should return when body has an error', () => {
+				const data = {
+					body: {
+						notAProperty: null,
+					},
+				};
+				return request(app)
+					.patch('/api/users/cm3op7iwu0000jrcqa60tc9kv')
+					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
+					.send(data)
+					.expect(400);
+			});
+		});
 	});
 
 	describe('Devices', () => {

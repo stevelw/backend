@@ -1,6 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as devices from '../models/devices';
 import * as cats from '../models/cats';
+import * as users from '../models/users';
+import validator from '../utils/validator';
 
 export function getDevices(request: Request, response: Response) {
 	const { id } = request.params;
@@ -20,4 +22,24 @@ export function getCats(request: Request, response: Response) {
 			data: data,
 		});
 	});
+}
+
+export function updateUser(req: Request, res: Response, next: NextFunction) {
+	const schema = {
+		requestPrivacy: 'boolean',
+	};
+	const payload = req.body;
+	const result = validator(payload, schema);
+
+	if (!result.success) return next({ status: 400, message: result.errors });
+
+	const { id } = req.params;
+	users
+		.updateUser(id, req.body)
+		.then((updatedUser) => {
+			res.status(204).json({ sucess: true, data: updatedUser });
+		})
+		.catch(() => {
+			res.status(500).send({ msg: 'Server error' });
+		});
 }
