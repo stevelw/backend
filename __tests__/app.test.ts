@@ -103,15 +103,21 @@ describe('🧪 Express Application', () => {
 		});
 
 		describe('PATCH /api/users/:id', () => {
-			it('204: should return no content on successful update', () => {
+			it('200: should return updated user on successful update', () => {
 				const data = {
-					requested_privacy: true,
+					requested_privacy: 'PUBLIC',
 				};
 				return request(app)
 					.patch('/api/users/settings')
 					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
 					.send(data)
-					.expect(204);
+					.expect(200)
+					.then(({ body }) => {
+						expect(body).toMatchObject({
+							sucess: true,
+							data: { requested_privacy: 'PUBLIC' },
+						});
+					});
 			});
 			it('400: should return when body has an error', () => {
 				const data = {

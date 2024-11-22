@@ -26,7 +26,7 @@ export function getCats(request: Request, response: Response) {
 
 export function updateUser(req: Request, res: Response, next: NextFunction) {
 	const schema = {
-		requested_privacy: 'boolean',
+		requested_privacy: 'string',
 	};
 	const payload = req.body;
 	const result = validator(payload, schema);
@@ -38,7 +38,7 @@ export function updateUser(req: Request, res: Response, next: NextFunction) {
 	users
 		.updateUser(id, req.body)
 		.then((updatedUser) => {
-			res.status(204).json({ sucess: true, data: updatedUser });
+			res.status(200).json({ sucess: true, data: updatedUser });
 		})
 		.catch(() => {
 			res.status(500).send({ msg: 'An internal server error occurred' });
