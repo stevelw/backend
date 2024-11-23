@@ -24,6 +24,19 @@ export function getCats(request: Request, response: Response) {
 	});
 }
 
+export function getUser(req: Request, res: Response) {
+	const id: string = req.headers.authorization ?? '';
+
+	users
+		.getUserById(id)
+		.then((user) => {
+			res.status(200).json({ sucess: true, data: user });
+		})
+		.catch(() => {
+			res.status(500).send({ msg: 'An internal server error occurred' });
+		});
+}
+
 export function updateUser(req: Request, res: Response, next: NextFunction) {
 	const schema = {
 		requested_privacy: 'string',

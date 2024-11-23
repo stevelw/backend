@@ -102,8 +102,21 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('PATCH /api/users/settings', () => {
-			it('200: should return updated user on successful update', () => {
+		describe('/api/users/settings', () => {
+			it('GET 200: should return user', () => {
+				return request(app)
+					.get('/api/users/settings')
+					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
+					.send()
+					.expect(200)
+					.then(({ body }) => {
+						expect(body).toMatchObject({
+							sucess: true,
+							data: { requested_privacy: expect.any(String) },
+						});
+					});
+			});
+			it('PATCH 200: should return updated user on successful update', () => {
 				const data = {
 					requested_privacy: 'PUBLIC',
 				};
@@ -119,7 +132,7 @@ describe('🧪 Express Application', () => {
 						});
 					});
 			});
-			it('400: should return when body has an error', () => {
+			it('PATCH 400: should return when body has an error', () => {
 				const data = {
 					body: {
 						notAProperty: null,
