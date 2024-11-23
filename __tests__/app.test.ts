@@ -102,7 +102,7 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('PATCH /api/users/:id', () => {
+		describe('PATCH /api/users/settings', () => {
 			it('200: should return updated user on successful update', () => {
 				const data = {
 					requested_privacy: 'PUBLIC',
