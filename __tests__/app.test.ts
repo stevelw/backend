@@ -106,7 +106,7 @@ describe('🧪 Express Application', () => {
 			it('GET 200: should return user', () => {
 				return request(app)
 					.get('/api/users/settings')
-					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
+					.set('authorization', 'user1')
 					.send()
 					.expect(200)
 					.then(({ body }) => {
@@ -122,7 +122,7 @@ describe('🧪 Express Application', () => {
 				};
 				return request(app)
 					.patch('/api/users/settings')
-					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
+					.set('authorization', 'user1')
 					.send(data)
 					.expect(200)
 					.then(({ body }) => {
@@ -140,7 +140,7 @@ describe('🧪 Express Application', () => {
 				};
 				return request(app)
 					.patch('/api/users/settings')
-					.set('Authorization', 'cm3op7iwu0000jrcqa60tc9kv')
+					.set('authorization', 'user1')
 					.send(data)
 					.expect(400);
 			});

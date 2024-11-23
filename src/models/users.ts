@@ -11,15 +11,15 @@ export function getUserById(id: string) {
 export function getUserByUsername(username: string) {
 	return extendedClient.user.findFirst({
 		where: {
-			username: username,
+			username,
 		},
 	});
 }
 
-export function updateUser(userId: string, data: object) {
+export function updateUser(username: string, data: object) {
 	return extendedClient.user.update({
 		where: {
-			id: userId,
+			username,
 		},
 		data,
 	});

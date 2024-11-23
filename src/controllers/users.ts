@@ -3,6 +3,7 @@ import * as devices from '../models/devices';
 import * as cats from '../models/cats';
 import * as users from '../models/users';
 import validator from '../utils/validator';
+import { type User } from '@prisma/client';
 
 export function getDevices(request: Request, response: Response) {
 	const { id } = request.params;
@@ -24,20 +25,25 @@ export function getCats(request: Request, response: Response) {
 	});
 }
 
-export function getUser(req: Request, res: Response) {
-	const id: string = req.headers.authorization ?? '';
-
-	users
-		.getUserById(id)
-		.then((user) => {
-			res.status(200).json({ sucess: true, data: user });
-		})
-		.catch(() => {
-			res.status(500).send({ msg: 'An internal server error occurred' });
-		});
+export function getUser(
+	user: User,
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
+	if (user) {
+		res.status(200).json({ sucess: true, data: user });
+	} else {
+		next({ status: 500, message: 'An internal server error occurred' });
+	}
 }
 
-export function updateUser(req: Request, res: Response, next: NextFunction) {
+export function updateUser(
+	user: User,
+	req: Request,
+	res: Response,
+	next: NextFunction
+) {
 	const schema = {
 		requested_privacy: 'string',
 	};
@@ -46,10 +52,8 @@ export function updateUser(req: Request, res: Response, next: NextFunction) {
 
 	if (!result.success) return next({ status: 400, message: result.errors });
 
-	const id: string = req.headers.authorization ?? '';
-
 	users
-		.updateUser(id, req.body)
+		.updateUser(user.username, req.body)
 		.then((updatedUser) => {
 			res.status(200).json({ sucess: true, data: updatedUser });
 		})
