@@ -11,9 +11,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Privacy {
+  PUBLIC
+  FRIENDS
+  PRIVATE
+}
+
 model User {
   id       String @unique @default(cuid())
   username String @unique
+
+  requested_privacy  Privacy @default(PUBLIC)
 
   devices Device[]
   cats    Cat[]

@@ -101,6 +101,50 @@ describe('🧪 Express Application', () => {
 					});
 			});
 		});
+
+		describe('/api/users/settings', () => {
+			it('GET 200: should return user', () => {
+				return request(app)
+					.get('/api/users/settings')
+					.set('authorization', 'user1')
+					.send()
+					.expect(200)
+					.then(({ body }) => {
+						expect(body).toMatchObject({
+							sucess: true,
+							data: { requested_privacy: expect.any(String) },
+						});
+					});
+			});
+			it('PATCH 200: should return updated user on successful update', () => {
+				const data = {
+					requested_privacy: 'PUBLIC',
+				};
+				return request(app)
+					.patch('/api/users/settings')
+					.set('authorization', 'user1')
+					.send(data)
+					.expect(200)
+					.then(({ body }) => {
+						expect(body).toMatchObject({
+							sucess: true,
+							data: { requested_privacy: 'PUBLIC' },
+						});
+					});
+			});
+			it('PATCH 400: should return when body has an error', () => {
+				const data = {
+					body: {
+						notAProperty: null,
+					},
+				};
+				return request(app)
+					.patch('/api/users/settings')
+					.set('authorization', 'user1')
+					.send(data)
+					.expect(400);
+			});
+		});
 	});
 
 	describe('Devices', () => {
@@ -211,7 +255,6 @@ describe('🧪 Express Application', () => {
 					.send(data)
 					.expect(200)
 					.then(({ body: { success, data } }) => {
-						console.log(data);
 						expect(success).toBe(true);
 						expect(data).toMatchObject({
 							name: 'Daisy, Eater of Worlds',

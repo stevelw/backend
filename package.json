@@ -11,7 +11,10 @@
 		"dev": "nodemon src/server.ts",
 		"lint-staged": "lint-staged",
 		"format": "prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown",
-		"lint": "eslint --quiet --fix"
+		"lint": "eslint --quiet --fix",
+		"migrate": "npx prisma migrate dev",
+		"seed": "npx prisma db seed",
+		"studio": "npx prisma studio"
 	},
 	"repository": {
 		"type": "git",
