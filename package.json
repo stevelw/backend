@@ -14,8 +14,7 @@
 		"lint": "eslint --quiet --fix",
 		"migrate": "npx prisma migrate dev",
 		"seed": "npx prisma db seed",
-		"studio": "npx prisma studio",
-		"docker-delete-all": "docker rm -vf $(docker ps -aq)"
+		"studio": "npx prisma studio"
 	},
 	"repository": {
 		"type": "git",
