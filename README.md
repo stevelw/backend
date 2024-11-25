@@ -11,8 +11,9 @@
 
 ## Setting up for local development
 
-> [!IMPORTANT]  
-> This README assumes you have Docker installed. If you do not, please read [this](https://docs.docker.com/engine/install/) manual, based on your operating system. It will cover setting up and testing your very own Docker instance (lucky you!)
+### Prerequisites
+
+This README assumes you have Docker installed. If you do not, please read [this](https://docs.docker.com/engine/install/) manual, based on your operating system. It will cover setting up and testing your very own Docker instance (lucky you!)
 
 ### Requirements
 
@@ -54,13 +55,18 @@
 #### Creating the environment
 
 1. Create a new `.env` file at the root of the project
-2. Refer to the `example.env` for what KEY:VALUE pairs you need
-   1. For `DATABASE_URL`, the `DATABASE`, `USERNAME` and `PASSWORD` can be found in `docker-compose.local.yaml`. The `HOST` will be the result of `npm run get-docker-ip`
-
-> [!WARNING]  
-> If you are using Docker Desktop (primarily for Windows and MacOS), you should change `HOST` to `localhost` and `PORT` to `54320`
+2. Refer to the `example.env` file, replacing values where required
+   1. The `DATABASE_URL` will be constructed of values from `docker-compose.local.yaml` and the output of previous steps.
+      1. If you have not changed any values, you can copy & paste this into your `.env` - `DATABASE_URL="postgresql://root:root@HOST:5432/clowder"` and skip to step 5
+      2. `POSTGRES_USER` will be our `USERNAME`
+      3. `POSTGRES_PASSWORD` will be our `PASSWORD`
+      4. `POSTGRES_DB` will be our `DATABASE`
+      5. The IP copied from [Setting up the database](###-Setting-up-the-database) will be our `HOST`
 
 #### Migration and Seeding
+
+> [!WARNING]  
+> If at this point you get an error with connecting to the database, try changing the port in the `DATABASE_URL` environment variable to `54320`
 
 1. Run all of the migrations by executing
    ```bash
@@ -81,6 +87,10 @@
    ```
    npm run dev
    ```
+
+#### Running the application
+
+1. Execute `npm run dev`. This will run the `nodemon` instance, allowing for a smooth experience without having to restart the server.
 
 ---
 
