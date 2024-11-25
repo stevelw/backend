@@ -66,7 +66,7 @@ export async function getAllCatsWithRange(range: string) {
 			startDate.setFullYear(startDate.getFullYear() - 1);
 			break;
 		case 'all_time':
-			startDate.setFullYear(1900, 0, 1);
+			startDate.setTime(0);
 			break;
 	}
 
