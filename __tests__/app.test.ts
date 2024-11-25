@@ -293,45 +293,51 @@ describe('🧪 Express Application', () => {
 					return request(app)
 						.get('/api/cats/leaderboard/DAILY')
 						.expect(200)
-						.then(({ body: { success, range } }) => {
+						.then(({ body: { success, data, range } }) => {
 							expect(success).toBe(true);
 							expect(range).toBe('daily');
+							expect(data).toBeSorted();
+							expect(data.length).toBe(2);
 						});
 				});
 				it('200: WEEKLY', () => {
 					return request(app)
 						.get('/api/cats/leaderboard/WEEKLY')
 						.expect(200)
-						.then(({ body: { success, range } }) => {
+						.then(({ body: { success, data, range } }) => {
 							expect(success).toBe(true);
 							expect(range).toBe('weekly');
+							expect(data).toBeSorted();
 						});
 				});
 				it('200: MONTHLY', () => {
 					return request(app)
 						.get('/api/cats/leaderboard/MONTHLY')
 						.expect(200)
-						.then(({ body: { success, range } }) => {
+						.then(({ body: { success, data, range } }) => {
 							expect(success).toBe(true);
 							expect(range).toBe('monthly');
+							expect(data).toBeSorted();
 						});
 				});
 				it('200: YEARLY', () => {
 					return request(app)
 						.get('/api/cats/leaderboard/YEARLY')
 						.expect(200)
-						.then(({ body: { success, range } }) => {
+						.then(({ body: { success, data, range } }) => {
 							expect(success).toBe(true);
 							expect(range).toBe('yearly');
+							expect(data).toBeSorted();
 						});
 				});
 				it('200: ALL_TIME', () => {
 					return request(app)
 						.get('/api/cats/leaderboard/all_time')
 						.expect(200)
-						.then(({ body: { success, range } }) => {
+						.then(({ body: { success, data, range } }) => {
 							expect(success).toBe(true);
 							expect(range).toBe('all_time');
+							expect(data).toBeSorted();
 						});
 				});
 			});
