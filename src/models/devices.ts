@@ -48,6 +48,7 @@ export async function updateDevice(
 		history.push({
 			lat: currentInformation.last_location.lat,
 			lon: currentInformation.last_location.lon,
+			timestamp: currentInformation.last_location.timestamp,
 		});
 		// We have previous data. Lets push it to the history before we overwrite
 	}
@@ -58,7 +59,11 @@ export async function updateDevice(
 		},
 		data: {
 			last_pulse_at: new Date(),
-			last_location: { lat: data.lat, lon: data.lon },
+			last_location: {
+				lat: data.lat,
+				lon: data.lon,
+				timestamp: new Date().toISOString(),
+			},
 			location_history: history,
 		},
 	});
