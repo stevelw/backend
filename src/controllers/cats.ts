@@ -45,7 +45,7 @@ export function updateCat(
 	cats.fetchCatsByUserID(user.id).then((usersCats) => {
 		// ensure that the authenticated user owns the cat
 		const catMatch = usersCats.find((cat) => cat.id === result.body.cat_id);
-		if (!catMatch) throw new Error('no cat found');
+		if (!catMatch) return next({ status: 404, message: 'Cat does not exist' });
 
 		delete result.body.cat_id;
 		cats.updateCat(catMatch.id, result.body).then((updated_cat) => {
