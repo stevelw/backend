@@ -1,3 +1,3 @@
-type LocationHistoryType = { lat: number; lon: number; timestamp: string }[];
+type LocationHistoryType = { lat: number; lon: number }[];
 
 export default LocationHistoryType;
