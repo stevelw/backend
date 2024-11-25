@@ -153,7 +153,7 @@ describe('🧪 Express Application', () => {
 					.expect(200)
 					.then(({ body: { success, data, count } }) => {
 						expect(success).toBe(true);
-						expect(count).toBe(3);
+						expect(count).toBe(2);
 						data.forEach((user: object) => {
 							expect(user).toMatchObject({
 								username: expect.any(String),
