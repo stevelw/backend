@@ -1,4 +1,5 @@
 import extendedClient from '../db/client';
+import Coordinate from '../type/CoordinateType';
 import coordsToScore from '../utils/coordsToScore';
 
 export async function createCat(
@@ -102,11 +103,12 @@ export async function getAllCatsWithRange(range: string) {
 				return null;
 			});
 			// Convert our history into a useable format
-			const historyAsCoordinates: [number, number][] = historyInRange.map(
-				(item) => [item.lat, item.lon]
-			);
+			const historyAsCoordinates: Coordinate[] = historyInRange.map((item) => [
+				item.lat,
+				item.lon,
+			]);
 			// Create our final coordinates array that contains current location plus all the history
-			const coordinates: [number, number][] = [
+			const coordinates: Coordinate[] = [
 				[cat.last_location.lat, cat.last_location.lon],
 				...historyAsCoordinates,
 			];
