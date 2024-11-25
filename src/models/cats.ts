@@ -95,12 +95,7 @@ export async function getAllCatsWithRange(range: string) {
 			// Get all location history that we care about
 			const historyInRange = cat.location_history.filter((item) => {
 				const parsedTimestamp = new Date(item.timestamp);
-				// I'm aware that right now we cant really have a future date, but
-				// this is for forward compatibility - e.g. if we added a filter option
-				// to look at a leaderboard from 01-01-2024 to 01-02-2024
-				if (parsedTimestamp > startDate && parsedTimestamp < endDate)
-					return item;
-				return null;
+				return parsedTimestamp > startDate && parsedTimestamp < endDate;
 			});
 			// Convert our history into a useable format
 			const historyAsCoordinates: Coordinate[] = historyInRange.map((item) => [
