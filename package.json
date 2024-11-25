@@ -7,7 +7,7 @@
 		"test": "jest",
 		"prepare": "husky",
 		"setup-db": "./setup-db.sh local up -d",
-		"get-docker-ip": "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf \"name=psql\")",
+		"get-docker-ip": "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ",
 		"dev": "nodemon src/server.ts",
 		"lint-staged": "lint-staged",
 		"format": "prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown",
