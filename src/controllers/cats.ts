@@ -53,3 +53,24 @@ export function updateCat(
 		});
 	});
 }
+
+export async function getLeaderboardWithRange(
+	request: Request,
+	response: Response,
+	next: NextFunction
+) {
+	const validRanges = ['daily', 'weekly', 'monthly', 'yearly', 'all_time'];
+	let { range } = request.params;
+
+	range = range.toLowerCase();
+
+	if (!validRanges.includes(range))
+		return next({
+			status: 400,
+			message: `'${range}' is not a recognized range`,
+		});
+
+	const catsData = await cats.getAllCatsWithRange(range);
+
+	response.status(200).json({ success: true, data: catsData, range: range });
+}
