@@ -175,7 +175,7 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('POST /api/devices/update', () => {
+		describe('PATCH /api/devices/update', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
 					id: '5804f943-4aaf-432f-83d8-62028827ac57',
