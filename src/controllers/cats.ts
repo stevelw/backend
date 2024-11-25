@@ -10,7 +10,7 @@ export function createCat(
 	next: NextFunction
 ) {
 	const schema = {
-		name: 'string',
+		name: 'string,optional',
 		description: 'string,optional',
 		picture_url: 'string,optional',
 	};
