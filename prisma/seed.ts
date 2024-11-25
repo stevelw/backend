@@ -61,6 +61,16 @@ async function seeder() {
 		},
 	});
 
+	await prisma.device.upsert({
+		where: { uuid: 'e062ebb6-4f14-4123-87bc-d31791756107' },
+		update: {},
+		create: {
+			name: 'A Collar',
+			owner_id: user1.id,
+			uuid: 'e062ebb6-4f14-4123-87bc-d31791756107',
+		},
+	});
+
 	await prisma.cat.upsert({
 		where: { id: 'cm3pr1rkb000008l8fs7icr9g' },
 		update: {},
