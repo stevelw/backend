@@ -218,19 +218,15 @@ describe('🧪 Express Application', () => {
 
 	describe('Cats', () => {
 		describe('POST /api/cats/create', () => {
-			const body = {
-				name: 'Nala',
-			};
 			it('201: should create a new cat with no body', () => {
 				return request(app)
 					.post('/api/cats/create')
 					.set('Authorization', 'user1')
-					.send(body)
 					.expect(201)
 					.then(({ body: { success, data } }) => {
 						expect(success).toBe(true);
 						expect(data).toMatchObject({
-							name: 'Nala',
+							name: null,
 							description: null,
 							picture_url: null,
 						});
@@ -239,7 +235,6 @@ describe('🧪 Express Application', () => {
 			it('401: should alert of no authorization', () => {
 				return request(app)
 					.post('/api/cats/create')
-					.send(body)
 					.expect(401)
 					.then(({ body: { success, message } }) => {
 						expect(success).toBe(false);
