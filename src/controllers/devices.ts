@@ -28,9 +28,6 @@ export function postUpdate(
 		id: 'string',
 		lat: 'number',
 		lon: 'number',
-		accuracy: 'number,optional',
-		sat: 'string,optional',
-		batt: 'number,optional',
 	};
 	const payload = request.body;
 	const result = validator(payload, schema);
