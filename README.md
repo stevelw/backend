@@ -57,12 +57,4 @@ This README assumes you have Docker installed. If you do not, please read [this]
 
 ---
 
-## Teardown of the container
-In order to kill and delete the Docker container, you can run
-```
-npm run docker-delete
-```
-
----
 <p align="center">Made with <img height="14" src="https://emoji.lgbt/assets/svg/gay-heart.svg"/> by the Clowder team</p>
-
