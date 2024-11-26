@@ -30,6 +30,9 @@ export async function createCat(
 export async function fetchCatsByUserID(id: string) {
 	return extendedClient.cat
 		.findMany({
+			include: {
+				battle_profile: true,
+			},
 			where: {
 				owner_id: id,
 			},
@@ -115,4 +118,20 @@ export async function getAllCatsWithRange(range: string) {
 		.sort((a, b) => b.score - a.score); // Sort descending
 
 	return sortedData;
+}
+
+export function increaseLevelAndXP(id: string, level: number, xp: number) {
+	return extendedClient.battleProfile.update({
+		where: {
+			cat_id: id,
+		},
+		data: {
+			level: {
+				increment: level,
+			},
+			xp: {
+				increment: xp,
+			},
+		},
+	});
 }

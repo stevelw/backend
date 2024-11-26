@@ -48,7 +48,7 @@ export async function updateDevice(
 		history.push({
 			lat: currentInformation.last_location.lat,
 			lon: currentInformation.last_location.lon,
-			timestamp: new Date().toISOString(),
+			timestamp: currentInformation.last_pulse_at!.toISOString(),
 		});
 		// We have previous data. Lets push it to the history before we overwrite
 	}
@@ -62,6 +62,9 @@ export async function updateDevice(
 			last_location: { lat: data.lat, lon: data.lon },
 			location_history: history,
 		},
+		include: {
+			cat: true,
+		},
 	});
 }
 
@@ -71,4 +74,18 @@ export function deleteDevice(id: string) {
 			id: id,
 		},
 	});
+}
+
+export async function getDeviceLocationHistory(
+	device_uuid: string,
+	count: number = -1
+) {
+	const data = await extendedClient.device.findFirst({
+		where: {
+			uuid: device_uuid,
+		},
+	});
+	return count === -1
+		? data?.location_history.slice(0, count)
+		: data?.location_history;
 }

@@ -21,7 +21,7 @@ model User {
   id       String @unique @default(cuid())
   username String @unique
 
-  requested_privacy  Privacy @default(PUBLIC)
+  requested_privacy Privacy @default(PUBLIC)
 
   devices Device[]
   cats    Cat[]
@@ -60,9 +60,24 @@ model Cat {
 
   device    Device? @relation(fields: [device_id], references: [id])
   device_id String? @unique
-  owner     User?  @relation(fields: [owner_id], references: [id])
+  owner     User?   @relation(fields: [owner_id], references: [id])
   owner_id  String
 
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
+  battle_profile BattleProfile?
+
+  updated_at      DateTime @updatedAt
+  created_at      DateTime @default(now())
+  battleProfileId String?
+}
+
+model BattleProfile {
+  id String @unique @default(cuid())
+
+  level Int @default(1)
+  xp Int @default(0)
+  wins Int @default(0)
+  losses Int @default(0)
+
+  cat   Cat @relation(fields: [cat_id], references: [id])
+  cat_id String  @unique
 }

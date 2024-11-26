@@ -71,7 +71,7 @@ async function seeder() {
 		},
 	});
 
-	await prisma.cat.upsert({
+	const tiddles = await prisma.cat.upsert({
 		where: { id: 'cm3pr1rkb000008l8fs7icr9g' },
 		update: {},
 		create: {
@@ -84,7 +84,7 @@ async function seeder() {
 		},
 	});
 
-	await prisma.cat.upsert({
+	const daisy = await prisma.cat.upsert({
 		where: { id: 'cm3pz1t0v000308jka8bl7x25' },
 		update: {},
 		create: {
@@ -94,6 +94,28 @@ async function seeder() {
 				'https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg',
 			owner_id: user1.id,
 			device_id: device2.id,
+		},
+	});
+
+	await prisma.battleProfile.upsert({
+		where: { id: 'cm3yd7wfc000108i6ef3w8hrl' },
+		update: {},
+		create: {
+			id: 'cm3yd7wfc000108i6ef3w8hrl',
+			cat_id: tiddles.id,
+			xp: 50,
+			level: 3,
+		},
+	});
+
+	await prisma.battleProfile.upsert({
+		where: { id: 'cm3ydclnf000208i6cf79ehz1' },
+		update: {},
+		create: {
+			id: 'cm3ydclnf000208i6cf79ehz1',
+			cat_id: daisy.id,
+			xp: 390,
+			level: 666,
 		},
 	});
 }

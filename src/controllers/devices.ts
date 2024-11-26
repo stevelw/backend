@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import validator from '../utils/validator';
 import * as devices from '../models/devices';
+import * as cats from '../models/cats';
 import { type User } from '@prisma/client';
+import coordsToScore from '../utils/coordsToScore';
+import calculateLevelsAndXP from '../utils/calculateLevelAndXP';
 
 export function createDevice(
 	user: User,
@@ -19,7 +22,7 @@ export function createDevice(
 		);
 }
 
-export function postUpdate(
+export async function postUpdate(
 	request: Request,
 	response: Response,
 	next: NextFunction
@@ -37,9 +40,27 @@ export function postUpdate(
 	const copy = JSON.parse(JSON.stringify(result.body));
 	delete copy.id;
 
-	devices.updateDevice(result.body.id, copy).then(() => {
+	try {
+		const device = await devices.updateDevice(result.body.id, copy);
+		const lastHistory = await devices.getDeviceLocationHistory(
+			result.body.id,
+			1
+		);
+		if (!lastHistory) {
+			response.status(204);
+			return;
+		} // This is the first request, don't add XP as the cat has traveled 0 points
+		const lastUpdate = lastHistory[0];
+		const points = coordsToScore([
+			[result.body.lat, result.body.lon],
+			[lastUpdate.lat, lastUpdate.lon],
+		]);
+		const { xp, level } = calculateLevelsAndXP(points);
+		await cats.increaseLevelAndXP(device.cat!.id, level, xp);
 		response.status(204).send();
-	});
+	} catch {
+		next({ status: 500, message: 'An internal server error occurred' });
+	}
 }
 
 export function deleteDevice(
