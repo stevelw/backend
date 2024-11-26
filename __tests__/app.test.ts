@@ -150,13 +150,34 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('POST /api/users/create', () => {
+		describe('GET /api/users', () => {
+			it('200: should get all users', () => {
+				return request(app)
+					.get('/api/users')
+					.expect(200)
+					.then(({ body: { success, data, count } }) => {
+						expect(success).toBe(true);
+						expect(count).toBe(2);
+						data.forEach((user: object) => {
+							expect(user).toMatchObject({
+								username: expect.any(String),
+								requested_privacy: expect.any(String),
+								created_at: expect.any(String),
+								devices: expect.any(Array),
+								cats: expect.any(Array),
+							});
+						});
+					});
+			});
+		});
+
+		describe('POST /api/users/', () => {
 			it('201: should create a new user', () => {
 				const body = {
 					username: 'jeepies',
 				};
 				return request(app)
-					.post('/api/users/create')
+					.post('/api/users/')
 					.send(body)
 					.expect(201)
 					.then(({ body: { success, data } }) => {

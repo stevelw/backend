@@ -62,6 +62,14 @@ export function updateUser(
 		});
 }
 
+export function getAllUsers(request: Request, response: Response) {
+	users.getAll().then((data) => {
+		response
+			.status(200)
+			.json({ success: true, data: data, count: data.length });
+	});
+}
+
 export function createUser(
 	request: Request,
 	response: Response,
