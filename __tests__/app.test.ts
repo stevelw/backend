@@ -171,13 +171,13 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('POST /api/users/create', () => {
+		describe('POST /api/users/', () => {
 			it('201: should create a new user', () => {
 				const body = {
 					username: 'jeepies',
 				};
 				return request(app)
-					.post('/api/users/create')
+					.post('/api/users/')
 					.send(body)
 					.expect(201)
 					.then(({ body: { success, data } }) => {
