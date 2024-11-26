@@ -42,7 +42,10 @@ export async function postUpdate(
 
 	try {
 		const device = await devices.updateDevice(result.body.id, copy);
-		const lastHistory = await devices.takeNFromDeviceHistory(result.body.id, 1);
+		const lastHistory = await devices.getDeviceLocationHistory(
+			result.body.id,
+			1
+		);
 		if (!lastHistory) {
 			response.status(204);
 			return;

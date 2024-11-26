@@ -76,11 +76,16 @@ export function deleteDevice(id: string) {
 	});
 }
 
-export async function takeNFromDeviceHistory(device_uuid: string, n: number) {
+export async function getDeviceLocationHistory(
+	device_uuid: string,
+	count: number = -1
+) {
 	const data = await extendedClient.device.findFirst({
 		where: {
 			uuid: device_uuid,
 		},
 	});
-	return data?.location_history.slice(0, n);
+	return count === -1
+		? data?.location_history.slice(0, count)
+		: data?.location_history;
 }
