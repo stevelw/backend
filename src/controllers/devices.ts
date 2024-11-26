@@ -55,7 +55,7 @@ export async function postUpdate(
 			[result.body.lat, result.body.lon],
 			[lastUpdate.lat, lastUpdate.lon],
 		]);
-		const [xp, level] = calculateLevelsAndXP(points);
+		const { xp, level } = calculateLevelsAndXP(points);
 		await cats.increaseLevelAndXP(device.cat!.id, level, xp);
 		response.status(204).send();
 	} catch {
