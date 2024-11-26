@@ -202,8 +202,8 @@ describe('🧪 Express Application', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
 					id: '5804f943-4aaf-432f-83d8-62028827ac57',
-					lat: 41.303921,
-					lon: -81.901693,
+					lat: 42.303921,
+					lon: -1.5,
 				};
 				return request(app).post('/api/devices/update').send(data).expect(204);
 			});
