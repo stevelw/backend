@@ -116,3 +116,19 @@ export async function getAllCatsWithRange(range: string) {
 
 	return sortedData;
 }
+
+export function increaseLevelAndXP(id: string, level: number, xp: number) {
+	return extendedClient.battleProfile.update({
+		where: {
+			cat_id: id,
+		},
+		data: {
+			level: {
+				increment: level,
+			},
+			xp: {
+				increment: xp,
+			},
+		},
+	});
+}

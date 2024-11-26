@@ -62,6 +62,9 @@ export async function updateDevice(
 			last_location: { lat: data.lat, lon: data.lon },
 			location_history: history,
 		},
+		include: {
+			cat: true,
+		},
 	});
 }
 
@@ -71,4 +74,13 @@ export function deleteDevice(id: string) {
 			id: id,
 		},
 	});
+}
+
+export async function takeNFromDeviceHistory(device_uuid: string, n: number) {
+	const data = await extendedClient.device.findFirst({
+		where: {
+			uuid: device_uuid,
+		},
+	});
+	return data?.location_history.slice(0, n);
 }
