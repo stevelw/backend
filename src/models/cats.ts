@@ -30,6 +30,9 @@ export async function createCat(
 export async function fetchCatsByUserID(id: string) {
 	return extendedClient.cat
 		.findMany({
+			include: {
+				battle_profile: true,
+			},
 			where: {
 				owner_id: id,
 			},
