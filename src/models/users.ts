@@ -36,3 +36,11 @@ export function getAll() {
 		},
 	});
 }
+
+export function createUser(username: string) {
+	return extendedClient.user.create({
+		data: {
+			username: username,
+		},
+	});
+}

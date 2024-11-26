@@ -2,10 +2,14 @@ import app from '../src/app';
 import request from 'supertest';
 import endpointsJson from '../src/endpoints.json';
 import seeder from '../prisma/seed';
+import { promisify } from 'util';
+import { exec } from 'child_process';
 
 const server = app.listen(6666);
 
-beforeEach(async () => {
+beforeAll(async () => {
+	console.log(`💽 Wiping and re-seeding`);
+	await promisify(exec)('npx prisma migrate reset --force');
 	await seeder();
 });
 
@@ -166,6 +170,25 @@ describe('🧪 Express Application', () => {
 					});
 			});
 		});
+
+		describe('POST /api/users/create', () => {
+			it('201: should create a new user', () => {
+				const body = {
+					username: 'jeepies',
+				};
+				return request(app)
+					.post('/api/users/create')
+					.send(body)
+					.expect(201)
+					.then(({ body: { success, data } }) => {
+						expect(success).toBe(true);
+						expect(data).toMatchObject({
+							username: 'jeepies',
+							requested_privacy: 'PUBLIC',
+						});
+					});
+			});
+		});
 	});
 
 	describe('Devices', () => {
@@ -222,7 +245,7 @@ describe('🧪 Express Application', () => {
 
 		describe('DELETE /api/devices/delete', () => {
 			const body = {
-				device_uuid: '5804f943-4aaf-432f-83d8-62028827ac57',
+				device_uuid: 'e062ebb6-4f14-4123-87bc-d31791756107',
 			};
 			it('204: should return no content on successful deletion', () => {
 				return request(app)
@@ -296,6 +319,71 @@ describe('🧪 Express Application', () => {
 					name: 'Daisy, Eater of Worlds',
 				};
 				return request(app).post('/api/cats/update').send(data).expect(401);
+			});
+		});
+
+		describe('GET /api/cats/leaderboard/:range', () => {
+			it('400: should return when passed an invalid date range', () => {
+				return request(app)
+					.get('/api/cats/leaderboard/INVALID')
+					.expect(400)
+					.then(({ body: { success, message } }) => {
+						expect(success).toBe(false);
+						expect(message).toBe("'invalid' is not a recognized range");
+					});
+			});
+			describe('RANGE', () => {
+				it('200: DAILY', () => {
+					return request(app)
+						.get('/api/cats/leaderboard/DAILY')
+						.expect(200)
+						.then(({ body: { success, data, range } }) => {
+							expect(success).toBe(true);
+							expect(range).toBe('daily');
+							expect(data).toBeSorted();
+							expect(data.length).toBe(2);
+						});
+				});
+				it('200: WEEKLY', () => {
+					return request(app)
+						.get('/api/cats/leaderboard/WEEKLY')
+						.expect(200)
+						.then(({ body: { success, data, range } }) => {
+							expect(success).toBe(true);
+							expect(range).toBe('weekly');
+							expect(data).toBeSorted();
+						});
+				});
+				it('200: MONTHLY', () => {
+					return request(app)
+						.get('/api/cats/leaderboard/MONTHLY')
+						.expect(200)
+						.then(({ body: { success, data, range } }) => {
+							expect(success).toBe(true);
+							expect(range).toBe('monthly');
+							expect(data).toBeSorted();
+						});
+				});
+				it('200: YEARLY', () => {
+					return request(app)
+						.get('/api/cats/leaderboard/YEARLY')
+						.expect(200)
+						.then(({ body: { success, data, range } }) => {
+							expect(success).toBe(true);
+							expect(range).toBe('yearly');
+							expect(data).toBeSorted();
+						});
+				});
+				it('200: ALL_TIME', () => {
+					return request(app)
+						.get('/api/cats/leaderboard/all_time')
+						.expect(200)
+						.then(({ body: { success, data, range } }) => {
+							expect(success).toBe(true);
+							expect(range).toBe('all_time');
+							expect(data).toBeSorted();
+						});
+				});
 			});
 		});
 	});

@@ -9,5 +9,6 @@ users.get('/:id/cats', controller.getCats);
 users.get('/settings', usernameAuth, controller.getUser);
 users.patch('/settings', usernameAuth, controller.updateUser);
 users.get('/', controller.getAllUsers);
+users.post('/create', controller.createUser);
 
 export default users;
