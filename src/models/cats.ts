@@ -1,4 +1,5 @@
 import extendedClient from '../db/client';
+import CoordinateObjectType from '../type/CoordinateObjectType';
 import Coordinate from '../type/CoordinateType';
 import coordsToScore from '../utils/coordsToScore';
 
@@ -132,6 +133,53 @@ export function increaseLevelAndXP(id: string, level: number, xp: number) {
 			xp: {
 				increment: xp,
 			},
+		},
+	});
+}
+
+export function getCatsWithLastLocation(
+	near: CoordinateObjectType,
+	radius: number
+) {
+	return extendedClient.device.findMany({
+		include: {
+			cat: true,
+		},
+		where: {
+			NOT: [
+				{
+					last_location: undefined,
+				},
+				{
+					cat: null,
+				},
+			],
+			AND: [
+				{
+					last_location: {
+						path: ['lat'],
+						gte: near.lat - radius,
+					},
+				},
+				{
+					last_location: {
+						path: ['lat'],
+						lte: near.lat + radius,
+					},
+				},
+			],
+		},
+	});
+}
+
+export function getCatByID(id: string) {
+	return extendedClient.cat.findFirst({
+		where: {
+			id: id,
+		},
+		include: {
+			device: true,
+			owner: true,
 		},
 	});
 }

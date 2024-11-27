@@ -32,6 +32,9 @@ export async function updateDevice(
 	data: { lat: number; lon: number }
 ) {
 	const currentInformation = await extendedClient.device.findFirst({
+		include: {
+			cat: true,
+		},
 		where: {
 			uuid: uuid,
 		},

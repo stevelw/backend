@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import validator from '../utils/validator';
 import * as cats from '../models/cats';
 import { type User } from '@prisma/client';
+import getAllIntersectingCoordinates from '../utils/checkLatLongIntersections';
 
 export function createCat(
 	user: User,
@@ -73,4 +74,34 @@ export async function getLeaderboardWithRange(
 	const catsData = await cats.getAllCatsWithRange(range);
 
 	response.status(200).json({ success: true, data: catsData, range: range });
+}
+
+export async function getCatsNearby(
+	request: Request,
+	response: Response,
+	next: NextFunction
+) {
+	const { id, distance } = request.params;
+
+	const baseCat = await cats.getCatByID(id);
+	if (!baseCat || !baseCat.device)
+		return next({ status: 404, message: 'Cat not found' });
+
+	const catsData = (
+		await cats.getCatsWithLastLocation(baseCat.device.last_location, +distance)
+	).filter((device) => device.cat?.id != id);
+	const locationPoints = catsData.map((cat) => cat.last_location);
+
+	const intersectingPoints = getAllIntersectingCoordinates(
+		baseCat.device!.last_location,
+		locationPoints,
+		+distance
+	);
+	const intersectingCats = intersectingPoints.map((point) =>
+		catsData.find((cat) => (cat.last_location = point))
+	);
+
+	response
+		.status(200)
+		.json({ success: true, data: intersectingCats, radius: `${distance}m` });
 }
