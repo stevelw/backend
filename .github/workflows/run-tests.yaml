@@ -25,6 +25,6 @@ jobs:
         run: npm ci
 
       - name: Run Tests
-        run: echo "$DATABASE_URL"
+        run: npm test
         env:
           DATABASE_URL: 'postgresql://root:root@${{ steps.docker-ip.outputs.IP }}:5432/clowder'
