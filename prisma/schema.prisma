@@ -42,7 +42,7 @@ model Device {
   cat Cat?
 
   last_pulse_at    DateTime?
-  /// [LastLocation]
+  /// [CoordinateObject]
   last_location    Json      @default("{}")
   /// [LocationHistory]
   location_history Json      @default("[]")
