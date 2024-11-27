@@ -135,3 +135,33 @@ export function increaseLevelAndXP(id: string, level: number, xp: number) {
 		},
 	});
 }
+
+export function getCatsWithLastLocation() {
+	return extendedClient.device.findMany({
+		include: {
+			cat: true,
+		},
+		where: {
+			NOT: [
+				{
+					last_location: undefined,
+				},
+				{
+					cat: null,
+				},
+			],
+		},
+	});
+}
+
+export function getCatByID(id: string) {
+	return extendedClient.cat.findFirst({
+		where: {
+			id: id,
+		},
+		include: {
+			device: true,
+			owner: true,
+		},
+	});
+}
