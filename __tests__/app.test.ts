@@ -396,8 +396,8 @@ describe('🧪 Express Application', () => {
 					.then(({ body: { success, data, radius } }) => {
 						expect(success).toBe(true);
 						expect(radius).toBe('5m');
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						data.forEach((match: any) => {
-							// eslint-disable-line @typescript-eslint/no-explicit-any
 							expect(match.cat).not.toBeUndefined();
 							expect(match.cat.id).not.toBe(daisy_id);
 						});
