@@ -219,7 +219,7 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('PATCH /api/devices/update', () => {
+		describe('POST /api/devices/update', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
 					id: '5804f943-4aaf-432f-83d8-62028827ac57',
@@ -287,14 +287,14 @@ describe('🧪 Express Application', () => {
 			});
 		});
 
-		describe('POST /api/cats/update', () => {
+		describe('PATCH /api/cats/update', () => {
 			it('204: should return no content on successful update', () => {
 				const data = {
 					cat_id: 'cm3pz1t0v000308jka8bl7x25',
 					name: 'Daisy, Eater of Worlds',
 				};
 				return request(app)
-					.post('/api/cats/update')
+					.patch('/api/cats/update')
 					.set('Authorization', 'user1')
 					.send(data)
 					.expect(200)
@@ -308,7 +308,7 @@ describe('🧪 Express Application', () => {
 			it('400: should return when body has an error', () => {
 				const data = {};
 				return request(app)
-					.post('/api/cats/update')
+					.patch('/api/cats/update')
 					.set('Authorization', 'user1')
 					.send(data)
 					.expect(400);
@@ -318,7 +318,7 @@ describe('🧪 Express Application', () => {
 					cat_id: 'cm3pz1t0v000308jka8bl7x25',
 					name: 'Daisy, Eater of Worlds',
 				};
-				return request(app).post('/api/cats/update').send(data).expect(401);
+				return request(app).patch('/api/cats/update').send(data).expect(401);
 			});
 		});
 

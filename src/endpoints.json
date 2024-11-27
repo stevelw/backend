@@ -116,7 +116,7 @@
 	{
 		"path": "/api/cats/update",
 		"description": "Update a cats social information",
-		"method": "POST",
+		"method": "PATCH",
 		"authentication": "username",
 		"body": {
 			"cat_id": "string",
