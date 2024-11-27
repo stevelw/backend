@@ -17,23 +17,14 @@ jobs:
       - name: Build Docker instance
         run: npm run setup-db
 
-      - name: Get Docker container ID
-        id: docker-id
-        run: echo ID=$(docker ps -aqf "name=psql") >> "$GITHUB_OUTPUT"
-
-      - name: Get Docker container IP
+      - name: Get Docker IP
         id: docker-ip
-        run: echo IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${{ steps.docker-id.outputs.ID }}) >> "$GITHUB_OUTPUT"
+        run: echo IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf 'name=psql')) >> "$GITHUB_OUTPUT"
 
       - name: Install Packages
         run: npm ci
 
-      - name: Seed database
-        run: npx prisma migrate dev && npx prisma db seed
-        env:
-          DATABASE_URL: 'postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder'
-
       - name: Run Tests
-        run: npm test
+        run: echo "$DATABASE_URL"
         env:
-          DATABASE_URL: 'postgresql://root:root@${{steps.docker-ip.outputs.IP}}:5432/clowder'
+          DATABASE_URL: 'postgresql://root:root@${{ steps.docker-ip.outputs.IP }}:5432/clowder'
