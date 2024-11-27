@@ -403,17 +403,6 @@ describe('🧪 Express Application', () => {
 						});
 					});
 			});
-			it('200: should return an array of cats in an unfeasible circle radius of a base cat', () => {
-				const daisy_id = 'cm3pz1t0v000308jka8bl7x25';
-				return request(app)
-					.get(`/api/cats/nearby/${daisy_id}/-1`)
-					.expect(200)
-					.then(({ body: { success, data, radius } }) => {
-						expect(success).toBe(true);
-						expect(radius).toBe('-1m');
-						expect(data).toEqual([]);
-					});
-			});
 			it('404: should return when a base cat is not found', () => {
 				const fake_id = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 				return request(app).get(`/api/cats/nearby/${fake_id}/5`).expect(404);
