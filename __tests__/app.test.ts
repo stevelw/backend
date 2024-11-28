@@ -58,7 +58,7 @@ describe('🧪 Express Application', () => {
 	describe('Users', () => {
 		describe('GET /api/users/:id/devices', () => {
 			const userWithDevices = 'cm3op7iwu0000jrcqa60tc9kv';
-			const userWithoutDevices = 'cm417qv9r000007jp3jzj28rl';
+			const userWithoutDevices = 'cm3op7iww0001jrcqpq3qxx6i';
 
 			it('200: should return the devices for a valid user with more than one device', () => {
 				return request(app)
@@ -83,7 +83,7 @@ describe('🧪 Express Application', () => {
 
 		describe('GET /api/users/:id/cats', () => {
 			const userWithCats = 'cm3op7iwu0000jrcqa60tc9kv';
-			const userWithoutCats = 'cm417qv9r000007jp3jzj28rl';
+			const userWithoutCats = 'cm3op7iww0001jrcqpq3qxx6i';
 
 			it('200: should return the devices for a valid user with more than one device', () => {
 				return request(app)
@@ -157,7 +157,7 @@ describe('🧪 Express Application', () => {
 					.expect(200)
 					.then(({ body: { success, data, count } }) => {
 						expect(success).toBe(true);
-						expect(count).toBe(3);
+						expect(count).toBe(2);
 						data.forEach((user: object) => {
 							expect(user).toMatchObject({
 								username: expect.any(String),
@@ -295,7 +295,7 @@ describe('🧪 Express Application', () => {
 				};
 				return request(app)
 					.patch('/api/cats/update')
-					.set('Authorization', 'user2')
+					.set('Authorization', 'user1')
 					.send(data)
 					.expect(200)
 					.then(({ body: { success, data } }) => {
