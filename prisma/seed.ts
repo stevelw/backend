@@ -12,12 +12,21 @@ async function seeder() {
 		},
 	});
 
-	await prisma.user.upsert({
+	const user2 = await prisma.user.upsert({
 		where: { username: 'user2' },
 		update: {},
 		create: {
 			id: 'cm3op7iww0001jrcqpq3qxx6i',
 			username: 'user2',
+		},
+	});
+
+	await prisma.user.upsert({
+		where: { username: 'user3' },
+		update: {},
+		create: {
+			id: 'cm417qv9r000007jp3jzj28rl',
+			username: 'user3',
 		},
 	});
 
@@ -44,7 +53,7 @@ async function seeder() {
 		update: {},
 		create: {
 			name: 'A Collar',
-			owner_id: user1.id,
+			owner_id: user2.id,
 			uuid: '36932d18-78a2-4ceb-b979-64a5ed441551',
 			last_pulse_at: '2024-11-25T16:22:11.108Z',
 			last_location: { lon: -1.447, lat: 53.8035 },
@@ -92,7 +101,7 @@ async function seeder() {
 			name: 'Daisy, Destroy of Life',
 			picture_url:
 				'https://c8.alamy.com/comp/DBTJAD/a-closeup-picture-of-a-cats-face-on-a-white-background-DBTJAD.jpg',
-			owner_id: user1.id,
+			owner_id: user2.id,
 			device_id: device2.id,
 		},
 	});
